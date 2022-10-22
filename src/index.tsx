@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Home } from "./Home";
 import "antd/dist/antd.css";
+import "./index.css";
+import { App } from "./pages/App";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(<Home />);
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(<App />);
