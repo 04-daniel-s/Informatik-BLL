@@ -8,12 +8,12 @@ const onFinishFailed = () => {};
 export const Login = () => {
   return (
     <div style={{ marginTop: "200px", display: "flex", justifyContent: "center" }}>
-      <Card title="Login" size="default" bordered={true} style={{ width: 600, height: 300, boxShadow: "0 0 10px 10px #f0f0f0" }}>
+      <Card title="Login" size="default" bordered={true} style={{ width: 600, height: 320, boxShadow: "0 0 10px 10px #f0f0f0" }}>
         <Form initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
           <Form.Item
             label="Nutzername"
             name="username"
-            rules={[{ required: true, message: "Bitte geben Sie Ihr Passwort ein!" }]}
+            rules={[{ required: true, message: "Bitte geben Sie Ihren Namen ein!" }]}
             labelCol={{ span: 5 }}
             labelAlign="left"
           >
@@ -37,7 +37,7 @@ export const Login = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button size={"large"} type="primary">
               Bestätigen
             </Button>
           </Form.Item>
