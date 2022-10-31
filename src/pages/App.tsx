@@ -1,14 +1,15 @@
 import React from "react";
-import { Button, Layout, Menu } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Button, Layout, Menu, Space } from "antd";
 import { Login } from "./Login";
-import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Register } from "./Register";
+import "../index.css";
+import { Home } from "./Home";
 
 const router = createBrowserRouter([
   { path: "/", element: <>Das ist die Startseite</> },
   { path: "/login", element: <Login /> },
-  { path: "/home", element: <>Das wird deine Homeseite</> },
+  { path: "/home", element: <Home /> },
   { path: "/register", element: <Register /> },
 ]);
 
@@ -16,17 +17,18 @@ export const App = () => {
   return (
     <Layout className="layout">
       <Layout.Header style={{ backgroundColor: "white", borderBottom: "1px solid #f0f0f0" }}>
+        <img className="center" height={"30px"} width="150px" src="https://i.ibb.co/8KzQ5Dz/Informatik.png" />
         <Menu theme="light" mode="horizontal">
           <Menu.Item key="1">
             <a href="home">Home</a> {/*Prüfen ob eingeloggt ansonsten zu localhost:3000 weiterleiten*/}
           </Menu.Item>
         </Menu>
-        <div style={{ position: "absolute", right: 30, top: 0 }}>
-          <Button href="/login" size="large" icon={<UserOutlined />}>
+        <div style={{ position: "absolute", right: 50, top: 0 }}>
+          <Button style={{ width: "120px", textAlign: "center" }} href="/login" size="large">
             Login
           </Button>
         </div>
-        <Layout.Content>
+        <Layout.Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <RouterProvider router={router} />
         </Layout.Content>
       </Layout.Header>
