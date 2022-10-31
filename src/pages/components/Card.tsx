@@ -1,6 +1,6 @@
 import { Button, Form, Input } from "antd";
 import React from "react";
-import "./Card.css";
+import "../styles/Card.css";
 import { Container } from "./Container";
 
 const onFinish = () => {};

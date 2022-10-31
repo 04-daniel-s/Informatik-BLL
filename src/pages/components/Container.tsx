@@ -1,5 +1,5 @@
 import React from "react";
-import "./Container.css";
+import "../styles/Container.css";
 
 export const Container = (props: React.PropsWithChildren<{ width: number }>) => {
   return (
