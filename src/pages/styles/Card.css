@@ -5,16 +5,11 @@
   gap: 16px;
 }
 
-.form > .input,
-.form > .button {
+.form > .input {
   width: 100%;
   height: 56px;
   padding: 0 16px;
   border-radius: 8px;
-}
-
-.form > .button {
-  font-weight: 600;
 }
 
 .form > h4 {

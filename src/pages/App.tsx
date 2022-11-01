@@ -5,9 +5,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Register } from "./Register";
 import "../index.css";
 import { Home } from "./Home";
+import { Subjects } from "./Subjects";
 
 const router = createBrowserRouter([
-  { path: "/", element: <>Das ist die Startseite</> },
+  { path: "/", element: <Subjects /> },
   { path: "/login", element: <Login /> },
   { path: "/home", element: <Home /> },
   { path: "/register", element: <Register /> },
