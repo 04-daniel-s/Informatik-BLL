@@ -1,0 +1,11 @@
+.list {
+  overflow-y: scroll;
+  height: 350px;
+}
+
+.ant-modal-body > h3 {
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.38);
+}

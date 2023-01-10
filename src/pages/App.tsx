@@ -1,23 +1,55 @@
 import React from "react";
-import { Button, Layout, Menu, Space } from "antd";
+import { Button, Layout, Menu, MenuProps, Space } from "antd";
 import { Login } from "./Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Register } from "./Register";
 import "../index.css";
 import { Home } from "./Home";
-import { Subjects } from "./Subjects";
+import { CalendarOutlined } from "@ant-design/icons";
+import { SubjectList } from "./SubjectList";
+import { Grades } from "./Grades";
+
+const { Header, Sider, Content } = Layout;
 
 const router = createBrowserRouter([
-  { path: "/", element: <Subjects /> },
+  { path: "/year/subjects", element: <SubjectList title={"Schuljahr 2022"} /> },
   { path: "/login", element: <Login /> },
-  { path: "/home", element: <Home /> },
+  { path: "/homepage", element: <Home /> },
   { path: "/register", element: <Register /> },
+  { path: "/test", element: <Grades /> },
 ]);
+
+const getSiderProps = [
+  {
+    key: "1",
+    label: "Schuljahr 2021",
+  },
+  {
+    key: "2",
+    label: "Schuljahr 2022",
+  },
+  {
+    key: "3",
+    label: "Schuljahr 2023",
+  },
+];
+
+const siderItems: MenuProps["items"] = getSiderProps.map((item) => {
+  return {
+    key: `${item.key}`,
+    icon: <CalendarOutlined />,
+    label: `${item.label}`,
+    children: [
+      { key: `${item.key}1`, label: "Noten" },
+      { key: `${item.key}2`, label: "Schulfächer" },
+    ],
+  };
+});
 
 export const App = () => {
   return (
-    <Layout className="layout">
-      <Layout.Header style={{ backgroundColor: "white", borderBottom: "1px solid #f0f0f0" }}>
+    <Layout style={{ height: "100vh" }}>
+      <Header style={{ backgroundColor: "white", borderBottom: "1px solid #f0f0f0" }}>
         <img className="center" height={"30px"} width="150px" src="https://i.ibb.co/8KzQ5Dz/Informatik.png" />
         <Menu theme="light" mode="horizontal">
           <Menu.Item key="1">
@@ -29,10 +61,19 @@ export const App = () => {
             Login
           </Button>
         </div>
-        <Layout.Content style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+      </Header>
+      <Layout>
+        {
+          /*PRÜFEN OB EINGELOGGT*/
+          <Sider width={"14%"}>
+            <Menu mode="inline" style={{ height: "100%" }} items={siderItems} />
+          </Sider>
+        }
+
+        <Content style={{ overflowY: "scroll", width: "100vw", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <RouterProvider router={router} />
-        </Layout.Content>
-      </Layout.Header>
+        </Content>
+      </Layout>
     </Layout>
   );
 };
