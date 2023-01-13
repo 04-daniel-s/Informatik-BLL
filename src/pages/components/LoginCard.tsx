@@ -1,23 +1,52 @@
-import { Button, Form } from "antd";
 import React from "react";
 import "../styles/Card.css";
-import { Container } from "./Container";
+import axios from "axios";
+import { useForm } from "antd/es/form/Form";
+import { useGetAuth } from "../../util/hooks/useGetAuth";
+import { login, register } from "../../util/services/studentService";
+import { Form, message } from "antd";
+import { useCookies } from "react-cookie";
 
-const onFinish = () => {};
+export const LoginCard = (props: React.PropsWithChildren<{ title: string }>) => {
+  const [form] = useForm();
+  const { refetchStudent } = useGetAuth();
+  const [_, setCookie] = useCookies(["user"]);
 
-const onFinishFailed = () => {};
+  const handleLogin = async () => {
+    const { username, password }: { username: string; password: string } = await form.validateFields();
 
-export const LoginCard = (props: React.PropsWithChildren<{ title: string; buttonName: string }>) => {
+    login(username, password)
+      .then((r) => {
+        setCookie("user", r);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${r}`;
+        refetchStudent();
+      })
+      .catch((e) => message.open({ key: "test", type: "success", content: "Loaded!", duration: 2 }));
+  };
+
+  const handleRegister = async () => {
+    const { name, username, password }: { name: string; username: string; password: string } = await form.validateFields();
+    console.log(name, username, password);
+    register(name, username, password)
+      .then((r) => {
+        refetchStudent();
+      })
+      .catch((e) => {});
+  };
+
   return (
-    <Container width={400}>
+    <Form
+      form={form}
+      initialValues={{ remember: true }}
+      onFinish={props.title === "Anmelden" ? handleLogin : handleRegister}
+      onFinishFailed={() => {}}
+      autoComplete="off"
+      className="container"
+      style={{ width: "400px" }}
+    >
       <h2>{props.title}</h2>
       <h3>Geben Sie Ihre Zugangsdaten ein</h3>
-      <Form className="form" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-        {props.children}
-        <Button type="primary" className="large-button">
-          {props.buttonName.toUpperCase()}
-        </Button>
-      </Form>
-    </Container>
+      {props.children}
+    </Form>
   );
 };
