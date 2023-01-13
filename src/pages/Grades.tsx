@@ -122,15 +122,3 @@ export const Grades = () => {
     </div>
   );
 };
-
-/*
-VARIANTE 1
-export const Grades = () => {
-  return (
-    <Card style={{ width: "70%" }}>
-      <h2 style={{ display: "flex" }}>Schuljahr 2022</h2>
-      <Tabs items={items} style={{ minHeight: "400px" }} defaultActiveKey="0" onChange={() => {}} />
-    </Card>
-  );
-};
-*/
