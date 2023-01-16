@@ -2,7 +2,7 @@ import { Button, Card, Input, InputNumber, Space } from "antd";
 import { EditOutlined, CheckOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-export const Grade = (props: { important: boolean; title: string; grade: number; date: string }) => {
+export const Grade = (props: { title: string; grade: number; date: string }) => {
   const [edit, setEdit] = useState(false);
 
   return (

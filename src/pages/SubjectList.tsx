@@ -6,10 +6,11 @@ import { Subject } from "./components/Subject";
 
 const subjects = [{ id: 0, title: "Mathematik" }];
 
-export const SubjectList = (props: { title: string }) => {
+export const SubjectList = () => {
+  const title = "Schuljahr 2022";
   return (
     <Container width={500}>
-      <h2>{props.title}</h2>
+      <h2>{title}</h2>
       <Divider />
       <Space direction="vertical" size={"small"} style={{ width: "100%" }}>
         <div className="list">

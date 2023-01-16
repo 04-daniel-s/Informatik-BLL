@@ -24,4 +24,5 @@ export interface Grade {
   title: string;
   date: string;
   grade: number;
+  classTest: boolean;
 }
