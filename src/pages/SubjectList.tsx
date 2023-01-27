@@ -23,7 +23,7 @@ export const SubjectList = () => {
             certificate.subjects.map((subject) => {
               return (
                 <div style={{ marginBottom: "2%" }}>
-                  <Subject id={subject.id} subject={subject.name} certificateId={parseInt(id)} />
+                  <Subject id={subject.id} subject={subject.name} certificateId={parseInt(id)} major={subject.major} />
                 </div>
               );
             })}
@@ -37,7 +37,7 @@ export const SubjectList = () => {
           type="primary"
           className="large-button"
         >
-          Hinzufügen {/*TODO: Dummy erzeugen*/}
+          Hinzufügen
         </Button>
       </Space>
     </Container>

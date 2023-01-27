@@ -3,8 +3,10 @@ import Title from "antd/es/typography/Title";
 import React from "react";
 import { Grade } from "./components/Grade";
 import { ArrowUpOutlined, CheckCircleOutlined, CloseCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { useGetAuth } from "../util/hooks/useGetAuth";
 import { Navigate, useParams } from "react-router";
+import { useGetCertificate } from "../util/hooks/useGetCertificate";
+import { addGrade } from "../util/services/gradeService";
+import { InvalidatedProjectKind } from "typescript";
 
 const grades = [
   { subject: "Mathematik", title: "", grade: 15, important: true },
@@ -24,10 +26,8 @@ const cascaderOptions = [
 ];
 
 export const Certificates = () => {
-  const { student } = useGetAuth();
   const { id } = useParams();
-  if (!id) return <Navigate to="/" />;
-  const certificate = student?.certificates.find((v) => v.id === parseInt(id));
+  const { certificate, invalidateCertificate } = useGetCertificate(parseInt(id as string));
   if (!certificate) return <Navigate to="/" />;
 
   const items = [
@@ -75,34 +75,53 @@ export const Certificates = () => {
         </div>
       ),
     },
-    {
-      label: "Ethik",
-      key: `1`,
+    ...certificate.subjects.map((subject) => ({
+      label: subject.name,
+      key: `${subject.id}`,
       children: (
         <Space align="start" direction="vertical">
           <Title level={3}>Klausuren</Title>
           <Space wrap direction="horizontal" size={"large"}>
-            <Grade title={"Klausur 1"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Klausur 1"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Klausur 2"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Klausur 1"} grade={0} date={"22.05.2023"} />
-            <Button style={{ marginLeft: "1em" }} size="large" icon={<PlusOutlined />} type="primary" shape="circle" />
+            {subject.grades
+              .filter((v) => v.classTest)
+              .map((grade) => (
+                <Grade title={grade.title} grade={grade.grade} date={grade.date} />
+              ))}
+            <Button
+              onClick={() => {
+                addGrade(subject.id, true);
+                invalidateCertificate();
+              }}
+              style={{ marginLeft: "1em" }}
+              size="large"
+              icon={<PlusOutlined />}
+              type="primary"
+              shape="circle"
+            />
           </Space>
           <Divider />
           <Title level={3}>Nebenleistungen</Title>
           <Space wrap direction="horizontal" size={"large"}>
-            <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Hausaufgabenüberprüfung 2"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
-            <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
-            <Button style={{ marginLeft: "1em" }} size="large" icon={<PlusOutlined />} type="primary" shape="circle" />
+            {subject.grades
+              .filter((v) => !v.classTest)
+              .map((grade) => (
+                <Grade title={grade.title} grade={grade.grade} date={grade.date} />
+              ))}
+            <Button
+              onClick={() => {
+                addGrade(subject.id, false);
+                invalidateCertificate();
+              }}
+              style={{ marginLeft: "1em" }}
+              size="large"
+              icon={<PlusOutlined />}
+              type="primary"
+              shape="circle"
+            />
           </Space>
         </Space>
       ),
-    },
+    })),
   ];
 
   return (

@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import "../styles/Subjects.css";
 import { BookOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Input, Modal, Row } from "antd";
+import { Button, Card, Checkbox, Col, Input, Modal, Row, Space } from "antd";
 import { deleteSubject } from "../../util/services/subjectService";
 import { useGetCertificate } from "../../util/hooks/useGetCertificate";
 
-export const Subject = (props: { id: number; subject: string; certificateId: number }) => {
+export const Subject = (props: { id: number; subject: string; major: boolean; certificateId: number }) => {
   const [open, setOpen] = useState(false);
   const { invalidateCertificate } = useGetCertificate();
 
   return (
     <>
-      <Modal title={`Bezeichnung ändern (${props.subject})`} destroyOnClose open={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)}>
-        <Input prefix={<BookOutlined />} className="input" type={"text"} placeholder="Die neue Bezeichnung hier eingeben" />
+      <Modal
+        width={"30em"}
+        title={`Bezeichnung ändern (${props.subject})`}
+        destroyOnClose
+        open={open}
+        onCancel={() => setOpen(false)}
+        onOk={() => setOpen(false)}
+      >
+        <Space direction="vertical" style={{ width: "100%" }} size={"large"}>
+          <Input prefix={<BookOutlined />} className="input" type={"text"} placeholder="Die neue Bezeichnung hier eingeben" />
+          <Checkbox checked={props.major}>Leistungskurs</Checkbox>
+        </Space>
       </Modal>
       <Card style={{ width: "100%" }}>
         <Row style={{ alignItems: "center" }}>

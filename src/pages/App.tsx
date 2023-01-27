@@ -49,7 +49,17 @@ export const App = () => {
           <Menu mode="inline" style={{ height: "100%" }} items={siderItems} />
           <FloatButton icon={<PlusOutlined />} style={{ position: "absolute", bottom: "5%", left: "70%" }} />
         </Sider>
-        <Content style={{ overflowY: "scroll", width: "100vw", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Content
+          style={{
+            overflowY: "scroll",
+            width: "100vw",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "white",
+          }}
+        >
           <Routes>
             <Route path="/certificate/:id" element={<Certificates />} />
             <Route path="/subjects/:id" element={<SubjectList />} />

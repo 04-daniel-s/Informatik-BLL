@@ -16,6 +16,7 @@ export interface Subject {
   certificate: number;
   name: string;
   grades: Grade[];
+  major: boolean;
 }
 
 export interface Grade {

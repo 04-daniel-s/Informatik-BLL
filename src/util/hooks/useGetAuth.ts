@@ -11,6 +11,7 @@ export const useGetAuth = () => {
     cacheTime: 1000 * 60 * 5,
     refetchOnWindowFocus: "always",
     enabled: axios.defaults.headers.common["Authorization"] !== undefined,
+    retry: 0,
     onError: () => {
       logout();
     },
