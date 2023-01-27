@@ -20,3 +20,12 @@ export const deleteSubject = (subjectId: number): Promise<Subject> => {
       .catch((e) => rej(e));
   });
 };
+
+export const editSubject = (subjectId: number, major: boolean, name: string): Promise<Subject> => {
+  return new Promise((res, rej) => {
+    axios
+      .put(`/api/subject/edit/${subjectId}`, { major, name })
+      .then((r) => res(r.data))
+      .catch((e) => rej(e));
+  });
+};

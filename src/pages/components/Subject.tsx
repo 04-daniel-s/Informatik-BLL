@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import "../styles/Subjects.css";
 import { BookOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Card, Checkbox, Col, Input, Modal, Row, Space } from "antd";
-import { deleteSubject } from "../../util/services/subjectService";
+import { deleteSubject, editSubject } from "../../util/services/subjectService";
 import { useGetCertificate } from "../../util/hooks/useGetCertificate";
 
 export const Subject = (props: { id: number; subject: string; major: boolean; certificateId: number }) => {
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState(props.subject);
+  const [major, setMajor] = useState(props.major);
+
   const { invalidateCertificate } = useGetCertificate();
 
   return (
@@ -17,11 +20,23 @@ export const Subject = (props: { id: number; subject: string; major: boolean; ce
         destroyOnClose
         open={open}
         onCancel={() => setOpen(false)}
-        onOk={() => setOpen(false)}
+        onOk={() => {
+          setOpen(false);
+          editSubject(props.id, major, name);
+          invalidateCertificate();
+        }}
       >
         <Space direction="vertical" style={{ width: "100%" }} size={"large"}>
-          <Input prefix={<BookOutlined />} className="input" type={"text"} placeholder="Die neue Bezeichnung hier eingeben" />
-          <Checkbox checked={props.major}>Leistungskurs</Checkbox>
+          <Input
+            onChange={(r) => setName(r.target.value)}
+            prefix={<BookOutlined />}
+            className="input"
+            type={"text"}
+            placeholder="Die neue Bezeichnung hier eingeben"
+          />
+          <Checkbox onChange={(r) => setMajor(r.target.checked)} checked={major}>
+            Leistungskurs
+          </Checkbox>
         </Space>
       </Modal>
       <Card style={{ width: "100%" }}>
@@ -29,10 +44,10 @@ export const Subject = (props: { id: number; subject: string; major: boolean; ce
           <Col span={2}>
             <BookOutlined />
           </Col>
-          <Col style={{ fontSize: "17px" }} span={7}>
+          <Col style={{ fontSize: "17px", overflowX: "hidden", textAlign: "left", paddingLeft: "1em" }} span={15}>
             {props.subject}
           </Col>
-          <Col span={3} offset={10}>
+          <Col span={3} offset={2}>
             <Button onClick={() => setOpen(!open)} icon={<EditOutlined />} />
           </Col>
           <Col span={2}>
