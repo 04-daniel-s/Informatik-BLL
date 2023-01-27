@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import "../styles/Subjects.css";
 import { BookOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Input, Modal, Row } from "antd";
+import { deleteSubject } from "../../util/services/subjectService";
+import { useGetCertificate } from "../../util/hooks/useGetCertificate";
 
-export const Subject = (props: { id: number; subject: string }) => {
+export const Subject = (props: { id: number; subject: string; certificateId: number }) => {
   const [open, setOpen] = useState(false);
+  const { invalidateCertificate } = useGetCertificate();
 
   return (
     <>
@@ -23,7 +26,12 @@ export const Subject = (props: { id: number; subject: string }) => {
             <Button onClick={() => setOpen(!open)} icon={<EditOutlined />} />
           </Col>
           <Col span={2}>
-            <Button icon={<DeleteOutlined />} />
+            <Button
+              onClick={() => {
+                deleteSubject(props.id).then((r) => invalidateCertificate());
+              }}
+              icon={<DeleteOutlined />}
+            />
           </Col>
         </Row>
       </Card>

@@ -14,19 +14,17 @@ export const LoginCard = (props: React.PropsWithChildren<{ title: string }>) => 
 
   const handleLogin = async () => {
     const { username, password }: { username: string; password: string } = await form.validateFields();
-
     login(username, password)
       .then((r) => {
         setCookie("user", r);
         axios.defaults.headers.common["Authorization"] = `Bearer ${r}`;
         refetchStudent();
       })
-      .catch((e) => message.open({ key: "test", type: "success", content: "Loaded!", duration: 2 }));
+      .catch((e) => message.open({ key: "test", type: "success", content: "Fehler!", duration: 2 }));
   };
 
   const handleRegister = async () => {
     const { name, username, password }: { name: string; username: string; password: string } = await form.validateFields();
-    console.log(name, username, password);
     register(name, username, password)
       .then((r) => {
         refetchStudent();

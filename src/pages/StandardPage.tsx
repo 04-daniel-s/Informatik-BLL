@@ -1,11 +1,13 @@
-import { Spin, Layout, Menu } from "antd";
+import { Spin, Layout } from "antd";
 import { Header, Content } from "antd/es/layout/layout";
 import axios from "axios";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { RouterProvider } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { useGetAuth } from "../util/hooks/useGetAuth";
-import { App, router } from "./App";
+import { App } from "./App";
+import { Login } from "./Login";
+import { Register } from "./Register";
 
 export const StandardPage = () => {
   const [cookies] = useCookies(["user"]);
@@ -32,12 +34,15 @@ export const StandardPage = () => {
     <>
       <Layout style={{ height: "100vh" }}>
         <Header style={{ backgroundColor: "white", borderBottom: "1px solid #f0f0f0" }}>
-          <img className="center" height={"30px"} width="150px" src="https://i.ibb.co/8KzQ5Dz/Informatik.png" />
-          <Menu theme="light" mode="horizontal"></Menu>
+          <img alt="" className="center" height={"30px"} width="150px" src="https://i.ibb.co/8KzQ5Dz/Informatik.png" />
         </Header>
         <Layout>
           <Content style={{ overflowY: "scroll", width: "100vw", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <RouterProvider router={router} />
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<Navigate to={"/login"} />} />
+            </Routes>
           </Content>
         </Layout>
       </Layout>

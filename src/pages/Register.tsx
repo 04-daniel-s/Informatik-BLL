@@ -7,13 +7,13 @@ import { Button, Form, Input } from "antd";
 export const Register = () => {
   return (
     <LoginCard title={"Registrieren"}>
-      <Form.Item>
+      <Form.Item name="name">
         <Input prefix={<EditOutlined />} className="input" placeholder="Vor- und Nachname" />
       </Form.Item>
-      <Form.Item>
+      <Form.Item name="username">
         <Input prefix={<UserOutlined />} className="input" placeholder="Nutzername" />
       </Form.Item>
-      <Form.Item>
+      <Form.Item name="password">
         <Input.Password prefix={<RightOutlined />} className="input" placeholder="Passwort" />
       </Form.Item>
       <h4>
@@ -27,6 +27,3 @@ export const Register = () => {
     </LoginCard>
   );
 };
-function refetchStudent() {
-  throw new Error("Function not implemented.");
-}

@@ -7,6 +7,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { CookiesProvider } from "react-cookie";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { StandardPage } from "./pages/StandardPage";
+import { Router, RouterProvider } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 15 } },
@@ -24,7 +26,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       }}
     >
       <CookiesProvider>
-        <StandardPage />
+        <BrowserRouter>
+          <StandardPage />
+        </BrowserRouter>
       </CookiesProvider>
       {process.env.NODE_ENV !== "production" && <ReactQueryDevtools initialIsOpen={false} />}
     </ConfigProvider>

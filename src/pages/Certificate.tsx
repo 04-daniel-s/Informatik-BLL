@@ -1,8 +1,8 @@
-import { Card, Cascader, Divider, Space, Statistic, Tabs, Tag } from "antd";
+import { Button, Card, Cascader, Divider, Space, Statistic, Tabs, Tag } from "antd";
 import Title from "antd/es/typography/Title";
 import React from "react";
 import { Grade } from "./components/Grade";
-import { ArrowUpOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { ArrowUpOutlined, CheckCircleOutlined, CloseCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useGetAuth } from "../util/hooks/useGetAuth";
 import { Navigate, useParams } from "react-router";
 
@@ -26,16 +26,9 @@ const cascaderOptions = [
 export const Certificates = () => {
   const { student } = useGetAuth();
   const { id } = useParams();
-
-  console.log(student);
   if (!id) return <Navigate to="/" />;
-  console.log(student?.certificates);
-  console.log(id);
   const certificate = student?.certificates.find((v) => v.id === parseInt(id));
-  console.log(certificate);
   if (!certificate) return <Navigate to="/" />;
-
-  console.log(certificate.name);
 
   const items = [
     {
@@ -88,11 +81,12 @@ export const Certificates = () => {
       children: (
         <Space align="start" direction="vertical">
           <Title level={3}>Klausuren</Title>
-          <Space wrap style={{ display: "flex" }} align="start" direction="horizontal" size={"large"}>
+          <Space wrap direction="horizontal" size={"large"}>
             <Grade title={"Klausur 1"} grade={0} date={"22.05.2023"} />
             <Grade title={"Klausur 1"} grade={0} date={"22.05.2023"} />
             <Grade title={"Klausur 2"} grade={0} date={"22.05.2023"} />
             <Grade title={"Klausur 1"} grade={0} date={"22.05.2023"} />
+            <Button style={{ marginLeft: "1em" }} size="large" icon={<PlusOutlined />} type="primary" shape="circle" />
           </Space>
           <Divider />
           <Title level={3}>Nebenleistungen</Title>
@@ -104,6 +98,7 @@ export const Certificates = () => {
             <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
             <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
             <Grade title={"Hausaufgabenüberprüfung 1"} grade={0} date={"22.05.2023"} />
+            <Button style={{ marginLeft: "1em" }} size="large" icon={<PlusOutlined />} type="primary" shape="circle" />
           </Space>
         </Space>
       ),
