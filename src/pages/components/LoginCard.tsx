@@ -6,11 +6,13 @@ import { useGetAuth } from "../../util/hooks/useGetAuth";
 import { login, register } from "../../util/services/studentService";
 import { Form, message } from "antd";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router";
 
 export const LoginCard = (props: React.PropsWithChildren<{ title: string }>) => {
   const [form] = useForm();
   const { refetchStudent } = useGetAuth();
   const [_, setCookie] = useCookies(["user"]);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     const { username, password }: { username: string; password: string } = await form.validateFields();
@@ -19,6 +21,7 @@ export const LoginCard = (props: React.PropsWithChildren<{ title: string }>) => 
         setCookie("user", r);
         axios.defaults.headers.common["Authorization"] = `Bearer ${r}`;
         refetchStudent();
+        navigate("/");
       })
       .catch((e) => message.open({ key: "test", type: "success", content: "Fehler!", duration: 2 }));
   };
@@ -28,6 +31,7 @@ export const LoginCard = (props: React.PropsWithChildren<{ title: string }>) => 
     register(name, username, password)
       .then((r) => {
         refetchStudent();
+        navigate("/login");
       })
       .catch((e) => {});
   };

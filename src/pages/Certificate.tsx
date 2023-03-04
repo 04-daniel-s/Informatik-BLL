@@ -6,29 +6,18 @@ import { ArrowUpOutlined, CheckCircleOutlined, CloseCircleOutlined, PlusOutlined
 import { Navigate, useParams } from "react-router";
 import { useGetCertificate } from "../util/hooks/useGetCertificate";
 import { addGrade } from "../util/services/gradeService";
-import { InvalidatedProjectKind } from "typescript";
-
-const grades = [
-  { subject: "Mathematik", title: "", grade: 15, important: true },
-  { subject: "Deutsch", title: "", grade: 15, important: true },
-  { subject: "Mathematik", title: "", grade: 15, important: true },
-  { subject: "Englisch", title: "", grade: 15, important: true },
-  { subject: "Geschichte", title: "", grade: 15, important: true },
-  { subject: "Ethik", title: "", grade: 15, important: true },
-  { subject: "Sport", title: "", grade: 15, important: true },
-];
-
-const cascaderOptions = [
-  { value: "0", label: "Schuljahr 2020" },
-  { value: "1", label: "Schuljahr 2021" },
-  { value: "2", label: "Schuljahr 2022" },
-  { value: "3", label: "Schuljahr 2023" },
-];
+import { useGetAuth } from "../util/hooks/useGetAuth";
 
 export const Certificates = () => {
   const { id } = useParams();
+  const { student } = useGetAuth();
   const { certificate, invalidateCertificate } = useGetCertificate(parseInt(id as string));
-  if (!certificate) return <Navigate to="/" />;
+
+  if (!certificate || !student) return <Navigate to="/" />;
+
+  const cascaderOptions = student.certificates
+    .filter((r) => r.id !== certificate.id)
+    .map((certificate) => ({ value: `${certificate.id}certificate`, label: certificate.name }));
 
   const items = [
     {
@@ -39,7 +28,7 @@ export const Certificates = () => {
           <Space style={{ width: "100%" }} direction="vertical">
             <Space style={{ width: "100%", display: "flex", justifyContent: "center" }} size={200} align="center" direction="horizontal">
               <Space size={50} align="center" style={{ width: "100%" }} direction="vertical">
-                <Title level={1}>2,5 Ø</Title>
+                <Title level={1}>{/*calculateAverage()*/} Ø</Title>
                 <Cascader placeholder="Zeugnis vergleichen" options={cascaderOptions}></Cascader>
                 <Card style={{ width: "250px" }}>
                   <Statistic title="Verbesserung" value={11.28} precision={2} valueStyle={{ color: "#3f8600" }} prefix={<ArrowUpOutlined />} suffix="%" />
