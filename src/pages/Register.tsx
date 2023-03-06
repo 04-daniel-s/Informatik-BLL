@@ -4,7 +4,7 @@ import { UserOutlined, RightOutlined, EditOutlined } from "@ant-design/icons";
 import { LoginCard } from "./components/LoginCard";
 import { Button, Form, Input } from "antd";
 
-export const Register = () => {
+export const Register = ({ setLogin }: { setLogin: (b: boolean) => void }) => {
   return (
     <LoginCard title={"Registrieren"}>
       <Form.Item name="name">
@@ -17,7 +17,7 @@ export const Register = () => {
         <Input.Password prefix={<RightOutlined />} className="input" placeholder="Passwort" />
       </Form.Item>
       <h4>
-        Du hast bereits einen Account? <a href="login"> Melde dich hier an!</a>
+        Du hast bereits einen Account? <a onClick={() => setLogin(true)}> Melde dich hier an!</a>
       </h4>
       <Form.Item>
         <Button style={{ margin: "0px" }} type="primary" htmlType="submit" className="large-button">

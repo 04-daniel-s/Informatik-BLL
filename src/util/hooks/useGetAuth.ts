@@ -4,10 +4,10 @@ import { useQuery, useQueryClient } from "react-query";
 import { auth } from "../services/studentService";
 
 export const useGetAuth = () => {
-  const [cookies, setCookies, removeCookies] = useCookies(["user"]);
+  const [_cookies, _setCookies, removeCookies] = useCookies(["user"]);
   const client = useQueryClient();
 
-  const { data, refetch, isLoading } = useQuery("useGetAuth", () => auth(), {
+  const { data, refetch, isLoading } = useQuery("useGetAuth", auth, {
     cacheTime: 1000 * 60 * 5,
     refetchOnWindowFocus: "always",
     enabled: axios.defaults.headers.common["Authorization"] !== undefined,

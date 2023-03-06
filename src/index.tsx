@@ -15,22 +15,22 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <QueryClientProvider client={queryClient}>
-    <ConfigProvider
-      locale={deDE}
-      theme={{
-        token: {
-          fontFamily: "Quicksand",
-          colorPrimary: "#837bd5",
-        },
-      }}
-    >
-      <CookiesProvider>
-        <BrowserRouter>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <ConfigProvider
+        locale={deDE}
+        theme={{
+          token: {
+            fontFamily: "Quicksand",
+            colorPrimary: "#837bd5",
+          },
+        }}
+      >
+        <CookiesProvider>
           <StandardPage />
-        </BrowserRouter>
-      </CookiesProvider>
-      {process.env.NODE_ENV !== "production" && <ReactQueryDevtools initialIsOpen={false} />}
-    </ConfigProvider>
-  </QueryClientProvider>
+        </CookiesProvider>
+        {process.env.NODE_ENV !== "production" && <ReactQueryDevtools initialIsOpen={false} />}
+      </ConfigProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
 );

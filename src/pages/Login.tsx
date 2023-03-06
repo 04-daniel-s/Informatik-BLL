@@ -3,7 +3,7 @@ import { Button, Form, Input } from "antd";
 import { LoginCard } from "./components/LoginCard";
 import { UserOutlined, RightOutlined } from "@ant-design/icons";
 
-export const Login = () => {
+export const Login = ({ setLogin }: { setLogin: (b: boolean) => void }) => {
   return (
     <LoginCard title={"Anmelden"}>
       <Form.Item name="username" rules={[{ required: true, message: "Gebe bitte deinen Nutzernamen ein!" }]}>
@@ -13,7 +13,7 @@ export const Login = () => {
         <Input.Password prefix={<RightOutlined />} className="input" placeholder="Passwort" />
       </Form.Item>
       <h4>
-        Du hast noch keinen Account? <a href="register">Hier registrieren!</a>
+        Du hast noch keinen Account? <a onClick={() => setLogin(false)}>Hier registrieren!</a>
       </h4>
       <Form.Item style={{ margin: "0px" }}>
         <Button type="primary" htmlType="submit" className="large-button">

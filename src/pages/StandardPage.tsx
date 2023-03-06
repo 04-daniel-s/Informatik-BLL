@@ -1,9 +1,9 @@
 import { Spin, Layout } from "antd";
 import { Header, Content } from "antd/es/layout/layout";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Navigate, Route, Routes } from "react-router";
+import { useNavigate } from "react-router";
 import { useGetAuth } from "../util/hooks/useGetAuth";
 import { App } from "./App";
 import { Login } from "./Login";
@@ -12,10 +12,14 @@ import { Register } from "./Register";
 export const StandardPage = () => {
   const [cookies] = useCookies(["user"]);
   const { student, refetchStudent, isUserLoading } = useGetAuth();
+  const navigate = useNavigate();
+
+  const [login, setLogin] = useState(true);
 
   useEffect(() => {
     if (!cookies.user) {
       delete axios.defaults.headers.common["Authorization"];
+      navigate("/");
       return;
     }
     axios.defaults.headers.common["Authorization"] = `Bearer ${cookies.user}`;
@@ -38,11 +42,7 @@ export const StandardPage = () => {
         </Header>
         <Layout>
           <Content style={{ overflowY: "scroll", width: "100vw", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="*" element={<Navigate to={"/login"} />} />
-            </Routes>
+            {login ? <Login setLogin={setLogin} /> : <Register setLogin={setLogin} />}
           </Content>
         </Layout>
       </Layout>

@@ -14,11 +14,11 @@ export const SubjectList = () => {
   if (!certificate || certificate === undefined) return <Spin size="large" />;
 
   return (
-    <Container width={500}>
+    <Container width={500} minHeight={"60em"}>
       <h2>{certificate.name}</h2>
       <Divider />
-      <Space direction="vertical" size={"small"} style={{ width: "100%" }}>
-        <div className="list">
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <div style={{ height: "37.5em" }} className="list">
           {certificate &&
             certificate.subjects.map((subject) => {
               return (

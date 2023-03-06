@@ -1,6 +1,5 @@
 .list {
   overflow-y: scroll;
-  height: 350px;
 }
 
 .ant-modal-body > h3 {
