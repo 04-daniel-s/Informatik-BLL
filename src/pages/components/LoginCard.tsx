@@ -11,14 +11,14 @@ import { useNavigate } from "react-router";
 export const LoginCard = (props: React.PropsWithChildren<{ title: string }>) => {
   const [form] = useForm();
   const { refetchStudent } = useGetAuth();
-  const [_, setCookie] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     const { username, password }: { username: string; password: string } = await form.validateFields();
     login(username, password)
       .then((r) => {
-        setCookie("user", r);
+        setCookie("user", r, { expires: new Date(Date.now() + 1000 * 60 * 60) });
         axios.defaults.headers.common["Authorization"] = `Bearer ${r}`;
         refetchStudent();
         navigate("/");
@@ -42,7 +42,6 @@ export const LoginCard = (props: React.PropsWithChildren<{ title: string }>) => 
       initialValues={{ remember: true }}
       onFinish={props.title === "Anmelden" ? handleLogin : handleRegister}
       onFinishFailed={() => {}}
-      autoComplete="off"
       className="container"
       style={{ width: "400px" }}
     >
